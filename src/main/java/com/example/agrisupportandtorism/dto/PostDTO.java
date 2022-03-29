@@ -1,15 +1,14 @@
 package com.example.agrisupportandtorism.dto;
 
 import com.example.agrisupportandtorism.entity.Post;
+import com.example.agrisupportandtorism.utils.DateTimeUtil;
+import com.example.agrisupportandtorism.utils.UrlUntil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Data
@@ -35,9 +34,6 @@ public class PostDTO {
     private String updatedDate;
     private String updatedTime;
 
-    public final static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    public final static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss a");
-
     private PostDTO() {
     }
 
@@ -57,16 +53,18 @@ public class PostDTO {
 
     public static PostDTO fromEntity(Post post) {
         PostDTO postDTO = new PostDTO();
+
         postDTO.setId(post.getId());
         postDTO.setTitle(post.getTitle());
         postDTO.setAddress(post.getAddress());
         postDTO.setBody(post.getBody());
-        postDTO.imageUrls = Post.getImageUrls(post.getImageUrls());
-        postDTO.createdUser = UserDTO.fromUser(post.getCreatedUser());
+        postDTO.setImageUrls(UrlUntil.convertStringToUrlList(post.getRawStringImageUrl()));
+        postDTO.setCreatedUser(UserDTO.fromUser(post.getCreatedUser()));
 
         LocalDateTime updatedDateTime = post.getUpdatedDateTime();
-        postDTO.updatedDate = updatedDateTime.format(PostDTO.dateFormatter);
-        postDTO.updatedTime = updatedDateTime.format(PostDTO.timeFormatter);
+        postDTO.updatedDate = updatedDateTime.format(DateTimeUtil.DATE_FORMATTER);
+        postDTO.updatedTime = updatedDateTime.format(DateTimeUtil.TIME_FORMATTER);
+
         return postDTO;
     }
 }

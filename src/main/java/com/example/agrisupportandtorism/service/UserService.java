@@ -3,6 +3,7 @@ package com.example.agrisupportandtorism.service;
 import com.example.agrisupportandtorism.config.model.JwtUserDetails;
 import com.example.agrisupportandtorism.dto.UserDTO;
 import com.example.agrisupportandtorism.entity.User;
+import com.example.agrisupportandtorism.exception.PermissionException;
 import com.example.agrisupportandtorism.exception.ResourceNotFoundException;
 import com.example.agrisupportandtorism.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class UserService {
             JwtUserDetails userDetails = (JwtUserDetails) obj;
             return userDetails.getCurrentUser();
         }else{
-            throw new RuntimeException("Request does not attach token");
+            throw new PermissionException("Request does not attach token");
         }
     }
 

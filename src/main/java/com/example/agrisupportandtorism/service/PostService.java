@@ -62,10 +62,7 @@ public class PostService {
     }
 
     public void deletePost(Integer postId){
-        Post post = isOwnPost(postId);
-        if(post != null){
-            postRepo.delete(post);
-        }
+        postRepo.delete(isOwnPost(postId));
     }
 
     private Post isOwnPost(Integer postId){
@@ -75,9 +72,12 @@ public class PostService {
             User currentUser = userService.getCurrentUser();
             if(currentUser.getUsername().equals(post.getCreatedUser().getUsername())){
                 return post;
+            }else{
+                throw new PermissionException(String.format("this post owner is [%s], not [%s]",post.getCreatedUser().getUsername(), currentUser.getUsername()));
             }
+        }else{
+            throw new ResourceNotFoundException(String.format("a post with id= [%s] is not exists !", postId));
         }
-        return null;
     }
 
     public PostDTO findPostDTOById(Integer postId){

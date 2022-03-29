@@ -1,6 +1,7 @@
 package com.example.agrisupportandtorism.entity;
 
 import com.example.agrisupportandtorism.dto.PostDTO;
+import com.example.agrisupportandtorism.utils.UrlUntil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +10,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 @Table(name = "post")
 @Entity
@@ -20,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Post {
-    private static String URL_SPLITTER = ",";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -43,20 +41,18 @@ public class Post {
     private String body;
 
     @Column(name = "urls")
-    private String imageUrls;
-
-    public static List<String> getImageUrls(String urls){
-        return Arrays.asList(urls.split(Post.URL_SPLITTER));
-    }
+    private String rawStringImageUrl;
 
     public static Post fromDTO(PostDTO postDTO){
         Post post = new Post();
+
         post.setId(postDTO.getId());
         post.setTitle(postDTO.getTitle());
         post.setAddress(postDTO.getAddress());
         post.setBody(postDTO.getBody());
-        post.setImageUrls(String.join(Post.URL_SPLITTER, postDTO.getImageUrls()));
+        post.setRawStringImageUrl(UrlUntil.convertUrlListToString(postDTO.getImageUrls()));
         post.setCreatedUser(User.fromUserDTO(postDTO.getCreatedUser()));
+
         return post;
     }
 }

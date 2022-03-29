@@ -1,9 +1,12 @@
 package com.example.agrisupportandtorism.dto;
 
 import com.example.agrisupportandtorism.entity.Post;
+import com.example.agrisupportandtorism.utils.UrlUntil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Data
 @Setter
@@ -23,7 +26,13 @@ public class ShortPostDTO {
         sPostDTO.setId(post.getId());
         sPostDTO.setTitle(post.getTitle());
         sPostDTO.setAddress(post.getAddress());
-        sPostDTO.setImageUrl(Post.getImageUrls(post.getImageUrls()).get(0));
+
+        List<String> imageUrls = UrlUntil.convertStringToUrlList(post.getRawStringImageUrl());
+        if(imageUrls.size() > 0){
+            sPostDTO.setImageUrl(imageUrls.get(0));
+        }else{
+            sPostDTO.setImageUrl("");
+        }
         return sPostDTO;
     }
 }
