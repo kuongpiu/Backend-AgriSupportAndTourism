@@ -1,6 +1,7 @@
-package com.example.agrisupportandtorism.entity;
+package com.example.agrisupportandtorism.entity.post;
 
 import com.example.agrisupportandtorism.dto.PostDTO;
+import com.example.agrisupportandtorism.entity.user.User;
 import com.example.agrisupportandtorism.utils.UrlUntil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;

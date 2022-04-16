@@ -1,6 +1,6 @@
-package com.example.agrisupportandtorism.repository;
+package com.example.agrisupportandtorism.repository.user;
 
-import com.example.agrisupportandtorism.entity.User;
+import com.example.agrisupportandtorism.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

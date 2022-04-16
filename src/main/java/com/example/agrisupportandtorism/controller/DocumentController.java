@@ -1,8 +1,8 @@
 package com.example.agrisupportandtorism.controller;
 
-import com.example.agrisupportandtorism.entity.Document;
-import com.example.agrisupportandtorism.entity.UploadDocumentResponse;
-import com.example.agrisupportandtorism.service.DocumentService;
+import com.example.agrisupportandtorism.entity.upload.Document;
+import com.example.agrisupportandtorism.entity.upload.UploadDocumentResponse;
+import com.example.agrisupportandtorism.service.upload.DocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

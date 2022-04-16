@@ -1,7 +1,7 @@
 package com.example.agrisupportandtorism.config.model;
 
-import com.example.agrisupportandtorism.entity.Role;
-import com.example.agrisupportandtorism.entity.User;
+import com.example.agrisupportandtorism.entity.user.Role;
+import com.example.agrisupportandtorism.entity.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

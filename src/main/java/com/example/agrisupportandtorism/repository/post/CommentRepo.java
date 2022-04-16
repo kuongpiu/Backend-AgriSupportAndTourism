@@ -1,6 +1,6 @@
-package com.example.agrisupportandtorism.repository;
+package com.example.agrisupportandtorism.repository.post;
 
-import com.example.agrisupportandtorism.entity.Comment;
+import com.example.agrisupportandtorism.entity.post.Comment;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,9 +1,9 @@
 package com.example.agrisupportandtorism.config.service;
 
 import com.example.agrisupportandtorism.config.model.JwtUserDetails;
-import com.example.agrisupportandtorism.entity.User;
+import com.example.agrisupportandtorism.entity.user.User;
 import com.example.agrisupportandtorism.exception.ResourceConflict;
-import com.example.agrisupportandtorism.repository.UserRepo;
+import com.example.agrisupportandtorism.repository.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;

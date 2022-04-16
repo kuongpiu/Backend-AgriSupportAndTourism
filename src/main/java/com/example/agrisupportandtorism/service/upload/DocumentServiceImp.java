@@ -1,17 +1,17 @@
-package com.example.agrisupportandtorism.service.imp;
+package com.example.agrisupportandtorism.service.upload;
 
-import com.example.agrisupportandtorism.entity.Document;
+import com.example.agrisupportandtorism.entity.upload.Document;
 import com.example.agrisupportandtorism.exception.CreateDocumentException;
 import com.example.agrisupportandtorism.exception.FileNotFoundInFileSystemException;
 import com.example.agrisupportandtorism.property.DocumentStorageProperty;
-import com.example.agrisupportandtorism.repository.DocumentRepo;
-import com.example.agrisupportandtorism.service.DocumentService;
+import com.example.agrisupportandtorism.repository.upload.DocumentRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,6 +39,7 @@ public class DocumentServiceImp implements DocumentService {
         }
     }
 
+    @Transactional
     public Document createDocument(MultipartFile multipartFile) {
         Document doc = new Document();
         doc.setName(multipartFile.getOriginalFilename());

@@ -1,15 +1,19 @@
-package com.example.agrisupportandtorism.service;
+package com.example.agrisupportandtorism.service.post;
 
 import com.example.agrisupportandtorism.dto.CommentDTO;
 import com.example.agrisupportandtorism.dto.UserDTO;
-import com.example.agrisupportandtorism.entity.Comment;
-import com.example.agrisupportandtorism.entity.User;
+import com.example.agrisupportandtorism.entity.post.Comment;
+import com.example.agrisupportandtorism.entity.user.User;
 import com.example.agrisupportandtorism.exception.PermissionException;
 import com.example.agrisupportandtorism.exception.ResourceNotFoundException;
-import com.example.agrisupportandtorism.repository.CommentRepo;
+import com.example.agrisupportandtorism.repository.post.CommentRepo;
+import com.example.agrisupportandtorism.service.user.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,22 +28,30 @@ public class CommentService {
     @Autowired
     private UserService userService;
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     public List<CommentDTO> findAllCommentByPostId(Integer postId){
         return commentRepo.findByPostId(postId, Sort.by(Sort.Direction.DESC, "createdDateTime")).stream().map(CommentDTO::fromEntity).collect(Collectors.toList());
     }
 
+    @Transactional
     public CommentDTO addComment(CommentDTO commentDTO){
-        System.out.println("commentDTO: " + commentDTO);
         UserDTO currentUser = userService.getCurrentUserInfo();
 
         commentDTO.setCreatedUser(currentUser);
         Comment comment = Comment.fromDTO(commentDTO);
         comment.setCreatedDateTime(LocalDateTime.now());
-        System.out.println("comment: " + comment);
-        return CommentDTO.fromEntity(commentRepo.save(comment));
+
+        Comment result = commentRepo.save(comment);
+
+        logger.info(String.format("Add comment, id=[%s]", result.getId()));
+
+        return CommentDTO.fromEntity(result);
     }
 
+    @Transactional
     public void deleteCommentById(Integer commentId){
+        logger.info(String.format("Delete comment, id= [%s]", commentId));
         commentRepo.delete(isOwnComment(commentId));
     }
 

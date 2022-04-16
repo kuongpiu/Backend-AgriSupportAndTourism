@@ -1,11 +1,13 @@
 package com.example.agrisupportandtorism.controller;
 
 import com.example.agrisupportandtorism.dto.UserDTO;
-import com.example.agrisupportandtorism.service.UserService;
+import com.example.agrisupportandtorism.entity.user.UpdatableUserInfo;
+import com.example.agrisupportandtorism.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -25,8 +27,12 @@ public class UserController {
         return userService.getCurrentUserInfo();
     }
 
+    @PutMapping("/updateAvatar")
+    public UserDTO updateAvatar(@RequestBody HashMap<String, String> data){
+        return userService.updateUserAvatar(data.get("avatar"));
+    }
     @PutMapping
-    public UserDTO updateUserInfo(@RequestBody @Valid UserDTO userDTO){
-        return userService.updateUserInfo(userDTO);
+    public UserDTO updateUserInfo(@RequestBody @Valid UpdatableUserInfo updatableUserInfo){
+        return userService.updateUserInfo(updatableUserInfo);
     }
 }

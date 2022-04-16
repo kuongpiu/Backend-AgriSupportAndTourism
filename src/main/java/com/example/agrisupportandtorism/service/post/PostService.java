@@ -1,19 +1,20 @@
-package com.example.agrisupportandtorism.service;
+package com.example.agrisupportandtorism.service.post;
 
 import com.example.agrisupportandtorism.dto.ShortPostDTO;
 import com.example.agrisupportandtorism.dto.UserDTO;
-import com.example.agrisupportandtorism.entity.Post;
+import com.example.agrisupportandtorism.entity.post.Post;
 import com.example.agrisupportandtorism.dto.PostDTO;
-import com.example.agrisupportandtorism.entity.User;
+import com.example.agrisupportandtorism.entity.user.User;
 import com.example.agrisupportandtorism.exception.PermissionException;
 import com.example.agrisupportandtorism.exception.ResourceNotFoundException;
-import com.example.agrisupportandtorism.repository.PostRepo;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.apache.tomcat.util.json.JSONParser;
+import com.example.agrisupportandtorism.repository.post.PostRepo;
+import com.example.agrisupportandtorism.service.user.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.PermissionDeniedDataAccessException;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +29,7 @@ public class PostService {
     @Autowired
     private UserService userService;
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
     public List<ShortPostDTO> findAll(){
         return postRepo.findAll()
                 .stream()
@@ -35,6 +37,15 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    public Page<ShortPostDTO> findAllPostsInPage(Pageable pageable){
+        Page<Post> postPage = postRepo.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "updatedDateTime")));
+
+        List<ShortPostDTO> content = postPage.getContent().stream().map(ShortPostDTO::fromEntity).collect(Collectors.toList());
+
+        return new PageImpl<>(content, postPage.getPageable(), postPage.getTotalElements());
+    }
+
+    @Transactional
     public PostDTO addPost(PostDTO postDTO){
         UserDTO currentUser = userService.getCurrentUserInfo();
         postDTO.setCreatedUser(currentUser);
@@ -42,9 +53,14 @@ public class PostService {
         Post post = Post.fromDTO(postDTO);
         post.setUpdatedDateTime(LocalDateTime.now());
 
-        return PostDTO.fromEntity(postRepo.save(post));
+        Post result = postRepo.save(post);
+
+        logger.info(String.format("Add post, id= [%s]", result.getId()));
+
+        return PostDTO.fromEntity(result);
     }
 
+    @Transactional
     public PostDTO updatePost(PostDTO postDTO){
         UserDTO currentUser = userService.getCurrentUserInfo();
         PostDTO postInRepo = findPostDTOById(postDTO.getId());
@@ -55,13 +71,17 @@ public class PostService {
             Post post = Post.fromDTO(postDTO);
             post.setUpdatedDateTime(LocalDateTime.now());
 
+            logger.info(String.format("Update post, id=[%s]", post.getId()));
+
             return PostDTO.fromEntity(postRepo.save(post));
         }else{
             throw new PermissionException("the user trying to update a post not his own!");
         }
     }
 
+    @Transactional
     public void deletePost(Integer postId){
+        logger.info(String.format("Delete post, id=[%s]", postId));
         postRepo.delete(isOwnPost(postId));
     }
 
@@ -88,5 +108,4 @@ public class PostService {
             throw new ResourceNotFoundException(String.format("Post with id=%s not exists", postId));
         }
     }
-
 }

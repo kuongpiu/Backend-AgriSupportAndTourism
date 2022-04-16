@@ -3,9 +3,12 @@ package com.example.agrisupportandtorism.controller;
 import com.example.agrisupportandtorism.dto.CommentDTO;
 import com.example.agrisupportandtorism.dto.PostDTO;
 import com.example.agrisupportandtorism.dto.ShortPostDTO;
-import com.example.agrisupportandtorism.service.CommentService;
-import com.example.agrisupportandtorism.service.PostService;
+import com.example.agrisupportandtorism.service.post.CommentService;
+import com.example.agrisupportandtorism.service.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +34,12 @@ public class PostController {
     @GetMapping("/all")
     public List<ShortPostDTO> findAll(){
         return postService.findAll();
+    }
+
+//    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    @GetMapping("/page")
+    public Page<ShortPostDTO> findAllPostsInPage(Pageable pageable){
+        return postService.findAllPostsInPage(pageable);
     }
 
     @PostMapping

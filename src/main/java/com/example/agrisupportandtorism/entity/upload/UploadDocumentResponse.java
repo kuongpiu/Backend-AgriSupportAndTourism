@@ -1,4 +1,4 @@
-package com.example.agrisupportandtorism.entity;
+package com.example.agrisupportandtorism.entity.upload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

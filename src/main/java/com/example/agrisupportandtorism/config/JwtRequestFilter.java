@@ -34,12 +34,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try{
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             }catch (IllegalArgumentException e){
-                System.out.println("Unable to get JWT Token");
+                logger.error("Không thể trích JWT Token");
             }catch (ExpiredJwtException e){
-                System.out.println("JWT Token has expired");
+                logger.error("JWT Token hết hạn sử dụng");
             }
         }else {
-            logger.warn("JWT Token does not begin with Bearer String: " + requestTokenHeader);
+//            logger.warn("JWT Token không bắt đầu bằng [Bearer]");
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){

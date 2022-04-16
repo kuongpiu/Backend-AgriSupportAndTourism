@@ -1,4 +1,4 @@
-package com.example.agrisupportandtorism.entity;
+package com.example.agrisupportandtorism.entity.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

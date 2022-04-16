@@ -1,4 +1,4 @@
-package com.example.agrisupportandtorism.entity;
+package com.example.agrisupportandtorism.entity.upload;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;

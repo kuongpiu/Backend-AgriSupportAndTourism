@@ -1,4 +1,4 @@
-package com.example.agrisupportandtorism.entity;
+package com.example.agrisupportandtorism.entity.user;
 
 import com.example.agrisupportandtorism.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -12,6 +12,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Table(name = "user")
 @Entity
@@ -20,7 +21,7 @@ import java.util.List;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Getter
 @Setter
-public class User implements Serializable {
+public class User implements Serializable{
     @Id
     @Column(name = "username")
     @NotNull
@@ -39,6 +40,9 @@ public class User implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "email")
+    private String email;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -54,6 +58,7 @@ public class User implements Serializable {
         user.setAddress(userDTO.getAddress());
         user.setAvatar(userDTO.getAvatar());
         user.setRoles(Role.convertToRoles(userDTO.getRoles()));
+        user.setEmail(userDTO.getEmail());
         return user;
     }
 
@@ -67,5 +72,18 @@ public class User implements Serializable {
                 ", address='" + address + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, name, avatar, address, roles);
     }
 }

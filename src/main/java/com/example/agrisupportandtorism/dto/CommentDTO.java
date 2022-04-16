@@ -1,13 +1,12 @@
 package com.example.agrisupportandtorism.dto;
 
-import com.example.agrisupportandtorism.entity.Comment;
+import com.example.agrisupportandtorism.entity.post.Comment;
 import com.example.agrisupportandtorism.utils.DateTimeUtil;
 import com.example.agrisupportandtorism.utils.UrlUntil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +17,7 @@ import java.util.List;
 
 public class CommentDTO {
     private Integer id;
+
     @NotNull(message = "post id cannot be null")
     private Integer postId;
     private String body;

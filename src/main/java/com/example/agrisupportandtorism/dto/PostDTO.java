@@ -1,6 +1,6 @@
 package com.example.agrisupportandtorism.dto;
 
-import com.example.agrisupportandtorism.entity.Post;
+import com.example.agrisupportandtorism.entity.post.Post;
 import com.example.agrisupportandtorism.utils.DateTimeUtil;
 import com.example.agrisupportandtorism.utils.UrlUntil;
 import lombok.Data;

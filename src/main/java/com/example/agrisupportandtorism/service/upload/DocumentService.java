@@ -1,13 +1,8 @@
-package com.example.agrisupportandtorism.service;
+package com.example.agrisupportandtorism.service.upload;
 
-import com.example.agrisupportandtorism.entity.Document;
+import com.example.agrisupportandtorism.entity.upload.Document;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 public interface DocumentService {
     Document createDocument(MultipartFile multipartFile);
