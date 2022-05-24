@@ -1,8 +1,11 @@
 package com.example.agrisupportandtorism.entity.post;
 
-import com.example.agrisupportandtorism.dto.PostDTO;
+import com.example.agrisupportandtorism.dto.post.PostDTO;
+import com.example.agrisupportandtorism.entity.address.District;
+import com.example.agrisupportandtorism.entity.address.Province;
+import com.example.agrisupportandtorism.entity.address.Ward;
 import com.example.agrisupportandtorism.entity.user.User;
-import com.example.agrisupportandtorism.utils.UrlUntil;
+import com.example.agrisupportandtorism.utils.UrlUtils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,8 +38,20 @@ public class Post {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "detail_address")
+    private String detailAddress;
+
+    @ManyToOne
+    @JoinColumn(name = "province_id", referencedColumnName = "id")
+    private Province province;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id", referencedColumnName = "id")
+    private District district;
+
+    @ManyToOne
+    @JoinColumn(name = "ward_id", referencedColumnName = "id")
+    private Ward ward;
 
     @Column(name = "body")
     private String body;
@@ -44,14 +59,23 @@ public class Post {
     @Column(name = "urls")
     private String rawStringImageUrl;
 
-    public static Post fromDTO(PostDTO postDTO){
+    @Column(name = "farm_id")
+    private Integer farmId;
+
+    public static Post fromDTO(PostDTO postDTO) {
         Post post = new Post();
 
         post.setId(postDTO.getId());
         post.setTitle(postDTO.getTitle());
-        post.setAddress(postDTO.getAddress());
+        post.setFarmId(postDTO.getFarmId());
+
+        post.setDetailAddress(postDTO.getDetailAddress());
+        post.setProvince(postDTO.getProvince());
+        post.setDistrict(postDTO.getDistrict());
+        post.setWard(postDTO.getWard());
+
         post.setBody(postDTO.getBody());
-        post.setRawStringImageUrl(UrlUntil.convertUrlListToString(postDTO.getImageUrls()));
+        post.setRawStringImageUrl(UrlUtils.convertUrlListToString(postDTO.getImageUrls()));
         post.setCreatedUser(User.fromUserDTO(postDTO.getCreatedUser()));
 
         return post;

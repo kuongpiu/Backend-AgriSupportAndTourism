@@ -1,6 +1,7 @@
 package com.example.agrisupportandtorism.config.service;
 
 import com.example.agrisupportandtorism.config.model.JwtUserDetails;
+import com.example.agrisupportandtorism.entity.user.Role;
 import com.example.agrisupportandtorism.entity.user.User;
 import com.example.agrisupportandtorism.exception.ResourceConflict;
 import com.example.agrisupportandtorism.repository.user.UserRepo;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,6 +44,11 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        List<Role> roles = new ArrayList<>();
+        roles.add(new Role("visitor"));
+        user.setRoles(roles);
+
         return userRepo.save(user);
     }
 }

@@ -1,11 +1,8 @@
-package com.example.agrisupportandtorism.dto;
+package com.example.agrisupportandtorism.dto.tree;
 
 import com.example.agrisupportandtorism.entity.farm.FarmTree;
-import com.example.agrisupportandtorism.entity.farm.Tree;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.HashMap;
 
 @Getter
 @Setter

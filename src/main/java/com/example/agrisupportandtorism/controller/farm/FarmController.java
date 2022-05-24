@@ -1,7 +1,7 @@
 package com.example.agrisupportandtorism.controller.farm;
 
-import com.example.agrisupportandtorism.dto.FarmDTO;
-import com.example.agrisupportandtorism.dto.ShortTrees;
+import com.example.agrisupportandtorism.dto.farm.FarmDTO;
+import com.example.agrisupportandtorism.dto.tree.ShortTrees;
 import com.example.agrisupportandtorism.service.farm.FarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

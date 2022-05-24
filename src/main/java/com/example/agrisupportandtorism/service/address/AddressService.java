@@ -3,6 +3,7 @@ package com.example.agrisupportandtorism.service.address;
 import com.example.agrisupportandtorism.entity.address.District;
 import com.example.agrisupportandtorism.entity.address.Province;
 import com.example.agrisupportandtorism.entity.address.Ward;
+import com.example.agrisupportandtorism.exception.ResourceNotFoundException;
 import com.example.agrisupportandtorism.repository.address.DistrictRepo;
 import com.example.agrisupportandtorism.repository.address.ProvinceRepo;
 import com.example.agrisupportandtorism.repository.address.WardRepo;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddressService {
@@ -38,6 +40,29 @@ public class AddressService {
         logger.info(String.format("search Wards in DistrictId=[%s] and contain name=[%s]", districtId, name));
         return wardRepo.findByDistrictIdAndNameContaining(districtId, name);
     }
-
+    public Province findProvinceById(String id){
+        Optional<Province> provinceOpt = provinceRepo.findById(id);
+        if(provinceOpt.isPresent()){
+            return provinceOpt.get();
+        }else{
+            throw new ResourceNotFoundException(String.format("Tỉnh không tồn tại, mã tỉnh=[%s]", id));
+        }
+    }
+    public District findDistrictById(String id){
+        Optional<District> districtOpt = districtRepo.findById(id);
+        if(districtOpt.isPresent()){
+            return districtOpt.get();
+        }else{
+            throw new ResourceNotFoundException(String.format("Huyện không tồn tại, mã huyện=[%s]", id));
+        }
+    }
+    public Ward findWardById(String id){
+        Optional<Ward> wardOpt = wardRepo.findById(id);
+        if(wardOpt.isPresent()){
+            return wardOpt.get();
+        }else{
+            throw new ResourceNotFoundException(String.format("Xã không tồn tại, mã xã=[%s]", id));
+        }
+    }
 
 }

@@ -1,18 +1,18 @@
 package com.example.agrisupportandtorism.entity.farm;
 
-import com.example.agrisupportandtorism.dto.FarmDTO;
+import com.example.agrisupportandtorism.dto.farm.FarmDTO;
+import com.example.agrisupportandtorism.entity.address.District;
+import com.example.agrisupportandtorism.entity.address.Province;
+import com.example.agrisupportandtorism.entity.address.Ward;
 import com.example.agrisupportandtorism.entity.user.User;
-import com.example.agrisupportandtorism.utils.DescUntil;
+import com.example.agrisupportandtorism.utils.DescUtils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Reference;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -31,9 +31,6 @@ public class Farm {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "address")
-    private String address;
-
     @Column(name = "description")
     private String description;
 
@@ -42,6 +39,25 @@ public class Farm {
         ,updatable = false)
     private User owner;
 
+    @ManyToOne
+    @JoinColumn(name = "mentor", referencedColumnName = "username")
+    private User mentor;
+
+    @ManyToOne
+    @JoinColumn(name = "province_id", referencedColumnName = "id")
+    private Province province;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id", referencedColumnName = "id")
+    private District district;
+
+    @ManyToOne
+    @JoinColumn(name = "ward_id", referencedColumnName = "id")
+    private Ward ward;
+
+    @Column(name = "detail_address")
+    private String detailAddress;
+
     @OneToMany(mappedBy = "farm")
     private List<FarmTree> farmTrees;
 
@@ -49,8 +65,12 @@ public class Farm {
         Farm farm = new Farm();
 
         farm.setName(farmDTO.getName());
-        farm.setAddress(farmDTO.getAddress());
-        farm.setDescription(DescUntil.convertMapToString(farmDTO.getDescriptions()));
+        farm.setDescription(DescUtils.convertMapToString(farmDTO.getDescriptions()));
+
+        farm.setProvince(farmDTO.getProvince());
+        farm.setDistrict(farmDTO.getDistrict());
+        farm.setWard(farmDTO.getWard());
+        farm.setDetailAddress(farmDTO.getDetailAddress());
 
         return farm;
     }

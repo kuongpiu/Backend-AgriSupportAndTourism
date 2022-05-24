@@ -24,7 +24,6 @@ public class Role {
     @Column(name = "role")
     private String role;
 
-
     public static List<String> convertToStrings(List<Role> roles){
         return roles.stream().map(Role::convertRoleToString).collect(Collectors.toList());
     }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UrlUntil {
+public class UrlUtils {
     public final static String URL_SPLITTER = ",";
     public static String convertUrlListToString(List<String> urls){
         if(urls != null){

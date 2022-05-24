@@ -1,6 +1,6 @@
 package com.example.agrisupportandtorism.service.post;
 
-import com.example.agrisupportandtorism.dto.CommentDTO;
+import com.example.agrisupportandtorism.dto.comment.CommentDTO;
 import com.example.agrisupportandtorism.dto.UserDTO;
 import com.example.agrisupportandtorism.entity.post.Comment;
 import com.example.agrisupportandtorism.entity.user.User;

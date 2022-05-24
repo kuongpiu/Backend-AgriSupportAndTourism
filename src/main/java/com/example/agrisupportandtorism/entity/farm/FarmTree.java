@@ -1,7 +1,6 @@
 package com.example.agrisupportandtorism.entity.farm;
 
-import com.example.agrisupportandtorism.dto.FarmTreeDTO;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.example.agrisupportandtorism.dto.tree.FarmTreeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Table(name = "farm_tree")
@@ -21,7 +19,7 @@ import javax.validation.constraints.PositiveOrZero;
 
 public class FarmTree {
     @EmbeddedId
-    @NotNull
+    @NotNull(message = "Mã vườn-cây là thông tin bắt buộc")
     private FarmTreeId id;
 
     @Column(name = "quantity")

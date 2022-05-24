@@ -1,13 +1,14 @@
 package com.example.agrisupportandtorism.service.post;
 
-import com.example.agrisupportandtorism.dto.ShortPostDTO;
+import com.example.agrisupportandtorism.dto.post.ShortPostDTO;
 import com.example.agrisupportandtorism.dto.UserDTO;
 import com.example.agrisupportandtorism.entity.post.Post;
-import com.example.agrisupportandtorism.dto.PostDTO;
+import com.example.agrisupportandtorism.dto.post.PostDTO;
 import com.example.agrisupportandtorism.entity.user.User;
 import com.example.agrisupportandtorism.exception.PermissionException;
 import com.example.agrisupportandtorism.exception.ResourceNotFoundException;
 import com.example.agrisupportandtorism.repository.post.PostRepo;
+import com.example.agrisupportandtorism.service.address.AddressService;
 import com.example.agrisupportandtorism.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class PostService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AddressService addressService;
+
     private Logger logger = LoggerFactory.getLogger(getClass());
     public List<ShortPostDTO> findAll(){
         return postRepo.findAll()
@@ -47,11 +51,16 @@ public class PostService {
 
     @Transactional
     public PostDTO addPost(PostDTO postDTO){
+        //TODO: check farm id
         UserDTO currentUser = userService.getCurrentUserInfo();
         postDTO.setCreatedUser(currentUser);
 
         Post post = Post.fromDTO(postDTO);
         post.setUpdatedDateTime(LocalDateTime.now());
+
+        post.setProvince(addressService.findProvinceById(post.getProvince().getId()));
+        post.setDistrict(addressService.findDistrictById(post.getDistrict().getId()));
+        post.setWard(addressService.findWardById(post.getWard().getId()));
 
         Post result = postRepo.save(post);
 

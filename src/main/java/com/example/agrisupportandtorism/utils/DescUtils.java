@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DescUntil {
+public class DescUtils {
     public static String DESCRIPTION_SPLITTER = ";";
     public static String KEY_VALUE_SPLITTER = ":";
     public static Map<String, String> convertStringToMap(String rawDesc){

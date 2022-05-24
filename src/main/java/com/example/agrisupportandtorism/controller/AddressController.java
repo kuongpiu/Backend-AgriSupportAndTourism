@@ -5,15 +5,14 @@ import com.example.agrisupportandtorism.entity.address.Province;
 import com.example.agrisupportandtorism.entity.address.Ward;
 import com.example.agrisupportandtorism.service.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/address")
+@CrossOrigin("http://localhost:9528/")
+
 public class AddressController {
     @Autowired
     private AddressService addressService;

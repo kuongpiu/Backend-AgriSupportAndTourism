@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -39,5 +40,18 @@ public class UserDTO {
                 ", avatar='" + avatar + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return username.equals(userDTO.username) && Objects.equals(name, userDTO.name) && Objects.equals(address, userDTO.address) && Objects.equals(email, userDTO.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, name, address, email);
     }
 }

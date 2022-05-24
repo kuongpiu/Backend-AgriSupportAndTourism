@@ -1,8 +1,8 @@
 package com.example.agrisupportandtorism.entity.post;
 
-import com.example.agrisupportandtorism.dto.CommentDTO;
+import com.example.agrisupportandtorism.dto.comment.CommentDTO;
 import com.example.agrisupportandtorism.entity.user.User;
-import com.example.agrisupportandtorism.utils.UrlUntil;
+import com.example.agrisupportandtorism.utils.UrlUtils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,7 +47,7 @@ public class Comment {
 
         comment.setId(commentDTO.getId());
         comment.setBody(commentDTO.getBody());
-        comment.setRawStringImageUrl(UrlUntil.convertUrlListToString(commentDTO.getImageUrls()));
+        comment.setRawStringImageUrl(UrlUtils.convertUrlListToString(commentDTO.getImageUrls()));
         comment.setCreatedUser(User.fromUserDTO(commentDTO.getCreatedUser()));
         comment.setPostId(commentDTO.getPostId());
 

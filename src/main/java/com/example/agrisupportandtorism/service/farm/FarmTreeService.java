@@ -1,6 +1,6 @@
 package com.example.agrisupportandtorism.service.farm;
 
-import com.example.agrisupportandtorism.dto.FarmTreeDTO;
+import com.example.agrisupportandtorism.dto.tree.FarmTreeDTO;
 import com.example.agrisupportandtorism.entity.farm.FarmTree;
 import com.example.agrisupportandtorism.entity.farm.FarmTreeId;
 import com.example.agrisupportandtorism.exception.ResourceNotFoundException;

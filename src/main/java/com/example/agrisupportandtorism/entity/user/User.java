@@ -49,6 +49,7 @@ public class User implements Serializable{
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "role")
     )
+
     private List<Role> roles;
 
     public static User fromUserDTO(UserDTO userDTO){
