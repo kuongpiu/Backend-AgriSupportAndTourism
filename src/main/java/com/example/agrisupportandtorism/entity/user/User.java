@@ -37,9 +37,6 @@ public class User implements Serializable{
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "address")
-    private String address;
-
     @Column(name = "email")
     private String email;
 
@@ -56,7 +53,6 @@ public class User implements Serializable{
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setName(userDTO.getName());
-        user.setAddress(userDTO.getAddress());
         user.setAvatar(userDTO.getAvatar());
         user.setRoles(Role.convertToRoles(userDTO.getRoles()));
         user.setEmail(userDTO.getEmail());
@@ -70,7 +66,6 @@ public class User implements Serializable{
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", address='" + address + '\'' +
                 ", roles=" + roles +
                 '}';
     }
@@ -85,6 +80,6 @@ public class User implements Serializable{
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, name, avatar, address, roles);
+        return Objects.hash(username, password);
     }
 }

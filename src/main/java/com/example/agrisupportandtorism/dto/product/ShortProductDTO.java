@@ -18,6 +18,7 @@ public class ShortProductDTO {
     private String mainImage;
     private Integer price;
     private String province;
+    private Integer farmId;
 
     public static ShortProductDTO fromEntity(Product product) {
         ShortProductDTO sProductDTO = new ShortProductDTO();
@@ -26,6 +27,7 @@ public class ShortProductDTO {
         sProductDTO.setMainImage(UrlUtils.convertStringToUrlList(product.getRawStringImageUrl()).get(0));
         sProductDTO.setPrice(product.getPrice());
         sProductDTO.setProvince(product.getProvince().getName());
+        sProductDTO.setFarmId(product.getFarmId());
 
         return sProductDTO;
     }

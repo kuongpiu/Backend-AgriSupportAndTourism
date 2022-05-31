@@ -78,6 +78,13 @@ public class CartService {
     }
 
     @Transactional
+    public void deleteAll(List<Integer> productIds) {
+        for (Integer productId : productIds) {
+            delete(productId);
+        }
+    }
+
+    @Transactional
     public void delete(Integer productId) {
         User currentUser = userService.getCurrentUser();
         CartItemId cartItemId = new CartItemId(currentUser.getUsername(), productId);

@@ -16,5 +16,4 @@ public class UpdatableUserInfo {
     @NotEmpty(message = "Tên người dùng không thể trống")
     private String name;
     private String email;
-    private String address;
 }
